@@ -1,5 +1,11 @@
+from pathlib import Path
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+
+# Get project root
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_PATH = BASE_DIR / "models" / "item_similarity.pkl"
+
 
 def train_model(train_df):
     user_item_matrix = train_df.pivot(index='user_id', columns='item_id', values='rating')
@@ -14,3 +20,9 @@ def train_model(train_df):
     )
 
     return item_similarity_df
+
+def save_model(item_similarity_df, path=MODEL_PATH):
+    item_similarity_df.to_pickle(path)
+
+def load_model(path=MODEL_PATH):
+    return pd.read_pickle(path)

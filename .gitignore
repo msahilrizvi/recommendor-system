@@ -19,6 +19,6 @@ Thumbs.db
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Model files (optional, if large)
 models/*.pkl
 models/*.npy
+*.egg-info/
