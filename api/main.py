@@ -1,16 +1,17 @@
 from fastapi import FastAPI
 from src.train import load_model
-from src.recommend import recommend_collab
+from src.service import RecommendationService
 import pandas as pd
 from pathlib import Path
 
 app = FastAPI()
 
-# Load data + model at startup
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 train_df = pd.read_csv(BASE_DIR / "data/processed/train.csv")
 item_similarity_df = load_model()
+
+service = RecommendationService(train_df, item_similarity_df)
 
 
 @app.get("/")
@@ -20,9 +21,5 @@ def root():
 
 @app.get("/recommend")
 def recommend(user_id: int, n: int = 10):
-    recommendations = recommend_collab(user_id, train_df, item_similarity_df, n)
-    
-    return {
-        "user_id": user_id,
-        "recommendations": recommendations
-    }
+    n = min(n, 15)
+    return service.get_recommendations(user_id, n)

@@ -1,0 +1,3 @@
+top_k: 10
+max_k: 50
+model_path: models/item_similarity.pkl
