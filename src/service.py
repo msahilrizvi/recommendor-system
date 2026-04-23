@@ -13,7 +13,7 @@ class RecommendationService:
             return {
                 "user_id": user_id,
                 "note": "User not found, returning popular items",
-                "recommendations": recommend_popular(n)
+                "recommendations": recommend_popular(self.train_df, n)
             }
 
         recommendations = recommend_collab(
