@@ -21,5 +21,5 @@ def root():
 
 @app.get("/recommend")
 def recommend(user_id: int, n: int = 10):
-    n = min(n, 15)
+    n = min(n, 20)
     return service.get_recommendations(user_id, n)
